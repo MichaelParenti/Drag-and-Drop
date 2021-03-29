@@ -1,0 +1,58 @@
+
+ <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="utf-8">
+     <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+     <meta name="dcterms.created" content="Fri, 27 Jun 2014 21:02:23 GMT">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <title></title>
+     <style>
+         body{
+             background-color:black;
+             min-width: 100vw;
+             min-height: 100vh;
+             overflow: hidden;
+         }
+     li
+     { 
+       position:  absolute;
+       left: 0;
+       top: 0; 
+       width: 200px; 
+       background: rgba(255,255,255,0.66); 
+       border: 2px  solid rgba(0,0,0,0.5); 
+       border-radius: 4px; padding: 8px;
+     }
+     </style>
+     <script>
+         function drag_start(event) {
+             var style = window.getComputedStyle(event.target, null);
+             var str = (parseInt(style.getPropertyValue("left")) - event.clientX) + ',' + (parseInt(style.getPropertyValue("top")) - event.clientY) + ',' + event.target.id;
+             event.dataTransfer.setData("Text", str);
+         }
+
+         function drop(event) {
+             var offset = event.dataTransfer.getData("Text").split(',');
+             var dm = document.getElementById(offset[2]);
+             dm.style.left = (event.clientX + parseInt(offset[0], 10)) + 'px';
+             dm.style.top = (event.clientY + parseInt(offset[1], 10)) + 'px';
+             event.preventDefault();
+             return false;
+         }
+
+         function drag_over(event) {
+             event.preventDefault();
+             return false;
+         }
+     </script>
+   </head>
+   <body ondragover="drag_over(event)" ondrop="drop(event)">
+
+    <ul>
+           <li id="txt1" draggable="true" ondragstart="drag_start(event)"> Drag this text </li><br>
+    </ul>
+ 
+   </body>
+</html>
